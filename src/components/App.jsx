@@ -12,7 +12,7 @@ Create main App component which is in charge of:
 
 function App() {
     // Start by declaring state variables for `dogImage` and `loading`
-    const [dogImage, setDogImage] = useState(null);
+    const [message, setMessage] = useState(null);
     const [loading, setLoading] = useState(false);
 
     // Use `useEffect` to call a function that feteches a dog image when the component mounts
@@ -34,11 +34,24 @@ function App() {
         fetch("https://dog.ceo/api/breeds/image/random")
             .then(response => response.json())
             .then(data => {
-                setDogImage(data.dogImage);
+                setMessage(data.message);
                 setLoading(false);
             })
             .catch(error => console.error("Error loading image: ", error));
     }
 
+    // Return for display
+    return (
+        <div className="app">
+            <h1>Dogs!</h1>
+            {/* Pass the necessary props to display DogDisplay */}
+            <DogDisplay message={message} loading={loading} />
 
+            {/* Pass the function to FetchButton to fetch new dog images onClick */}
+            < FetchButton fetchDogImage={fetchDogImage} />
+        </div>
+    )
 }
+
+// Make the function globally available
+export default App
